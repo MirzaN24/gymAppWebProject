@@ -35,21 +35,24 @@ class UserDao{
     //Method used to add objects into db
 
     public function add($first_name, $last_name, $email, $pass, $role){
-      $stmt = $this->conn -> prepare("INSERT INTO user (first_name, last_name, email, pass, role) VALUES ('$first_name', '$last_name', '$email', '$pass', '$role')");
-      $stmt->execute();
+      $stmt = $this->conn -> prepare("INSERT INTO user (first_name, last_name, email, pass, role) VALUES (:first_name, :last_name, :email, :pass, :role)");
+      $result = $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'pass' => $pass, 'role' => $role]);
+      #binding params to prevent sql inj
   }
 
       //Method used to update objects in db
 
       public function update($first_name, $last_name, $email, $pass, $role, $id){
-        $stmt = $this->conn -> prepare("UPDATE user SET first_name = '$first_name', last_name = '$last_name', email = '$email', pass = '$pass', role = '$role' WHERE id = $id");
-        $stmt->execute();
+        $stmt = $this->conn -> prepare("UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, pass = :pass, role = :role WHERE id = :id");
+        $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'pass' => $pass, 'role' => $role, 'id' => $id]);
+        #binding parameters to prevent sql inj
     }
 
       //Method used to delete objects from db
 
       public function delete($id){
-        $stmt = $this->conn -> prepare("DELETE FROM user WHERE id=$id");
+        $stmt = $this->conn -> prepare("DELETE FROM user WHERE id = :id");
+        $stmt -> bindParam(':id', $id); #prevents SQL injection //can do it this way too
         $stmt->execute();
     }
 
