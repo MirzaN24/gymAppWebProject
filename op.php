@@ -10,25 +10,32 @@ switch ($type) {
         $first_name = $_REQUEST['first_name'];
         $last_name = $_REQUEST['last_name'];
         $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
+        $pass = $_REQUEST['pass'];
         $role = $_REQUEST['role'];
-        $created = $_REQUEST['created'];
-        $result = $user_dao->add($first_name, $last_name, $email, $password, $role, $created);
+
+        $result = $user_dao->add($first_name, $last_name, $email, $pass, $role);
         print_r($result);
         break;
 
     case 'delete':
-        print_r("delete");
+        $id = $_REQUEST['id'];
+        $user_dao->delete($id);
         break;
 
     case 'update':
-        print_r("update");
+        $first_name = $_REQUEST['first_name'];
+        $last_name = $_REQUEST['last_name'];
+        $email = $_REQUEST['email'];
+        $pass = $_REQUEST['pass'];
+        $role = $_REQUEST['role'];
+        $id = $_REQUEST['id'];
+        $user_dao->update($first_name, $last_name, $email, $pass, $role, $id);
         break;
 
     case 'get':    
     default:
-        $stmt = $this->conn -> prepare("SELECT * FROM users");
-        $stmt->execute();
+        $result = $user_dao->get_all();
+        print_r($result);
         break;
 }
 

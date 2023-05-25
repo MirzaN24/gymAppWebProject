@@ -16,9 +16,9 @@ print_r($result);
 //     $conn = new PDO("mysql:host=$servername; dbname=$schema", $username, $password);
 //     // set the PDO error mode to exception
 //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//     echo "Connected successfully /n"; 
+//     echo "Connected successfully"; 
 
-//     $stmt = $conn -> prepare("SELECT * FROM users");
+//     $stmt = $conn -> prepare("SELECT * FROM user");
 //     $stmt->execute();
 //     $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 //     print_r($result);
