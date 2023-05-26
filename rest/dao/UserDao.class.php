@@ -18,7 +18,7 @@ class UserDao{
             $this->conn = new PDO("mysql:host=$this->servername; dbname=$this->schema", $this->username, $this->password);
             // set the PDO error mode to exception
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully"; 
+            //echo "Connected successfully"; commenting it for now 
           } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
           }
@@ -30,6 +30,14 @@ class UserDao{
         $stmt = $this->conn -> prepare("SELECT * FROM user");
         $stmt->execute();
         return $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+    }
+
+   //Method used to get users' id from db
+
+   public function get_by_id($id){
+        $stmt = $this->conn -> prepare("SELECT * FROM user WHERE id=:id");
+        $stmt->execute([':id' => $id]); //binding params
+        return $result = $stmt -> fetch();
     }
 
     //Method used to add objects into db
