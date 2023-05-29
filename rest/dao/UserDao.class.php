@@ -42,17 +42,21 @@ class UserDao{
 
     //Method used to add objects into db
 
-    public function add($first_name, $last_name, $email, $pass, $role){
+    public function add($user){
       $stmt = $this->conn -> prepare("INSERT INTO user (first_name, last_name, email, pass, role) VALUES (:first_name, :last_name, :email, :pass, :role)");
-      $result = $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'pass' => $pass, 'role' => $role]);
+      $stmt->execute($user);
+      $user['id'] = $this->conn->lastInsertId();
+      return $user;
       #binding params to prevent sql inj
   }
 
       //Method used to update objects in db
 
-      public function update($first_name, $last_name, $email, $pass, $role, $id){
+      public function update($user, $id){
+        $user['id'] = $id;
         $stmt = $this->conn -> prepare("UPDATE user SET first_name = :first_name, last_name = :last_name, email = :email, pass = :pass, role = :role WHERE id = :id");
-        $stmt->execute(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'pass' => $pass, 'role' => $role, 'id' => $id]);
+        $stmt->execute($user);
+        return ($user);
         #binding parameters to prevent sql inj
     }
 
