@@ -4,24 +4,24 @@ class UserDao{
 
     private $conn;
 
-    private $servername = "localhost";
-    private $username = "root";
-    private $password = "mirza123";
-    private $schema = "web-project-gym-app";
-
     //constructor used to establish connection to db
 
     public function __construct(){
 
+      try {
 
-        try {
-            $this->conn = new PDO("mysql:host=$this->servername; dbname=$this->schema", $this->username, $this->password);
-            // set the PDO error mode to exception
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //echo "Connected successfully"; commenting it for now 
-          } catch(PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-          }
+          $servername = "localhost";
+          $username = "root";
+          $password = "mirza123";
+          $schema = "web-project-gym-app";
+
+          $this->conn = new PDO("mysql:host=$this->servername; dbname=$this->schema", $this->username, $this->password);
+          // set the PDO error mode to exception
+          $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          //echo "Connected successfully"; commenting it for now 
+        } catch(PDOException $e) {
+          echo "Connection failed: " . $e->getMessage();
+        }
     }
     
     //Method used to get all objects from db
