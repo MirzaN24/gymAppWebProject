@@ -17,7 +17,7 @@ class BaseDao{
             $password = "mirza123";
             $schema = "web-project-gym-app";
   
-            $this->conn = new PDO("mysql:host=$this->servername; dbname=$this->schema", $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=$servername; dbname=$schema", $username, $password);
             // set the PDO error mode to exception
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //echo "Connected successfully"; commenting it for now 
@@ -32,7 +32,7 @@ class BaseDao{
     public function get_all(){
      $stmt = $this->conn -> prepare("SELECT * FROM " . $this->table_name);
      $stmt->execute();
-     return $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+     return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
 
    //Method used to get entities' id from db
@@ -57,6 +57,7 @@ class BaseDao{
     }
     $query = substr($query, 0, -2);
     $query = ")";
+    
     $stmt = $this->conn -> prepare($query);
     $stmt->execute($entity);
     $entity['id'] = $this->conn->lastInsertId();
