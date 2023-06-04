@@ -1,11 +1,11 @@
 <?php
 
 require '../vendor/autoload.php';
-require("dao/UserDao.class.php");
-require("dao/EmployeesDao.class.php");
+require("services/UserService.php");
+require("services/EmployeesService.php");
 
-Flight::register('user_dao', "UserDao");
-Flight::register('employees_dao', "EmployeesDao");
+Flight::register('user_service', "UserService");
+Flight::register('employees_service', "EmployeesService");
 
 require_once "routes/UserRoutes.php";
 require_once "routes/EmployeesRoutes.php";
