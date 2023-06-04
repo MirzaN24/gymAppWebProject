@@ -29,6 +29,4 @@ Flight::route('PUT /user/@id', function($id){
                   'data' => Flight::user_dao()->update($request, $id)]);
 });
 
-Flight::start();
-
 ?>

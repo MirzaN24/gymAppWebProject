@@ -35,12 +35,12 @@ class BaseDao{
      return $stmt -> fetchAll(PDO::FETCH_ASSOC);
     }
 
-   //Method used to get entities' id from db
+   //Method used to get entities by id from db
 
-   public function get_by_id($id){
-    $stmt = $this->conn -> prepare("SELECT * FROM " . $this->table_name . " WHERE id=:id");
+   public function get_by_id($id, $id_column = "id"){
+    $stmt = $this->conn -> prepare("SELECT * FROM " . $this->table_name . " WHERE ${id_column}=:id");
     $stmt->execute([':id' => $id]); //binding params
-    return $result = $stmt -> fetch();
+    return $result = $stmt -> fetch(PDO::FETCH_ASSOC);
    }
 
    //Method used to add objects into db
@@ -56,7 +56,7 @@ class BaseDao{
         $query.= ":" . $column . ', ';
     }
     $query = substr($query, 0, -2);
-    $query = ")";
+    $query.= ")";
     
     $stmt = $this->conn -> prepare($query);
     $stmt->execute($entity);
@@ -65,18 +65,19 @@ class BaseDao{
     #binding params to prevent sql inj
    }
 
-   //Method used to update objects in db //EDIT IN THE SAME WAY AS ADD
+   //Method used to update objects in db 
 
-  public function update($entity, $id, $id_column = "id"){
+   public function update($entity, $id, $id_column = "id"){
     $query = "UPDATE " . $this->table_name . " SET ";
     foreach($entity as $column => $value){
         $query.= $column . "=:" . $column . ", ";
     }
     $query = substr($query, 0, -2);
     $query.= " WHERE ${id_column} = :id";
-    
+
     $stmt = $this->conn -> prepare($query);
-    $user['id'] = $id;
+    $entity['id'] = $id;
+
     $stmt->execute($entity);
     return ($entity);
     #binding parameters to prevent sql inj
@@ -84,8 +85,8 @@ class BaseDao{
 
   //Method used to delete entities from db
 
-  public function delete($id){
-   $stmt = $this->conn -> prepare("DELETE FROM " . $this->table_name . " WHERE id = :id");
+  public function delete($id, $id_column = "id"){
+   $stmt = $this->conn -> prepare("DELETE FROM " . $this->table_name . " WHERE ${id_column} = :id");
    $stmt -> bindParam(':id', $id); #prevents SQL injection //can do it this way too
    $stmt->execute();
   }

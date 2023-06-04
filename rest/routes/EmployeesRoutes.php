@@ -9,11 +9,11 @@ Flight::route('GET /employees', function(){
 });
 
 Flight::route('GET /employees/@id', function($id){
-    Flight::json(Flight::employees_dao()->get_by_id($id));
+    Flight::json(Flight::employees_dao()->get_by_id($id, 'emp_id'));
 });
 
 Flight::route('DELETE /employees/@id', function($id){
-    Flight::employees_dao()->delete($id);
+    Flight::employees_dao()->delete($id, 'emp_id');
     Flight::json(['message' => "Employee deleted!"]);
 });
 
@@ -25,10 +25,8 @@ Flight::route('POST /employees', function(){
 
 Flight::route('PUT /employees/@id', function($id){
     $request = Flight::request()->data->getData();
-    Flight::json(['message' => 'Employee updated successfuly!',
-                  'data' => Flight::employees_dao()->update($request, $id)]);
+    return Flight::json(['message' => 'Employee updated successfuly!',
+                  'data' => Flight::employees_dao()->update($request, $id, 'emp_id')]);
 });
-
-Flight::start();
 
 ?>
