@@ -1,31 +1,12 @@
 <?php
 
-class EmployeesService{
+require_once 'BaseService.php';
+require_once __DIR__."/../dao/EmployeesDao.class.php";
 
-    private $employees_dao;
+class EmployeesService extends BaseService{
 
     public function __construct(){
-        $employees_dao = new EmployeesDao();
-    }
-
-    public function get_all(){
-        return $this->employees_dao->get_all();
-    }
-
-    public function get_by_id($id){
-        return $this->employees_dao->get_by_id($id);
-    }
-
-    public function update($employees, $id){
-        return $this->employees_dao->update($employees, $id);
-    }
-
-    public function add($employees){
-        return $this->employees_dao->add($employees);
-    }
-    
-    public function delete($id){
-        return $this->employees_dao->delete($id);
+        parent::__construct(new EmployeesDao);
     }
 }
 
