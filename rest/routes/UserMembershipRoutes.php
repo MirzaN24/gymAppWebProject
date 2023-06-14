@@ -30,5 +30,7 @@ Flight::route('PUT /user_membership/@id', function($id){
 });
 
 #update
+#delete and put request do not work because there are restrictions, if you want to fix them, edit it inside workbench
+#(Missing ON UPDATE/ON DELETE actions)
 
 ?>
