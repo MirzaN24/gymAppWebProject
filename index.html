@@ -2,6 +2,8 @@
 <html>
 <head>
 <title>Page Title</title>
+<script src="assets/js/initial.js"></script>
+<div id="cars">LIST</div>
 </head>
 <body>
 
@@ -42,6 +44,18 @@
 <sub> - Subscript text </sub>
 <sup> - Superscript text </sup>
 </pre>
+<script>
+//alert("hello");
+//hello();
+let list = '<ul>';
+for (var i = 0; i<cars.length; i++){
+    list+= '<li>' + cars[i] + '</li>';
+}
+list+= '</ul>';
+console.log(list);
+document.getElementById('cars').innerHTML = list;
+
+</script>
 
 <h1>This is a Heading</h1>
 <p>This is a paragraph.</p>
