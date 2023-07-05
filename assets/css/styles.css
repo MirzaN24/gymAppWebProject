@@ -1,0 +1,15 @@
+h1{
+    color: greenyellow
+}
+
+.city{
+    color:aqua
+}
+
+#city{
+    color: purple
+}
+
+table, th, tr, td{
+    border: solid black 1px;
+}

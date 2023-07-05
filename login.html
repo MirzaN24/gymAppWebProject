@@ -1,0 +1,33 @@
+<head>
+    <link rel="stylesheet" href="login.css">
+</head>
+<div class="loginContainer">
+    <div class="imageContainer">
+        <img src="assets/images/weights.png">
+    </div>
+    <div class="loginForm">
+        <img class="logo" src="assets/images/logo.png">
+        <div>
+            <h2 class="registerHeader">Login</h2>
+            <h5 class="description">Login with the data you entered during your registration.</h5>
+        </div>
+        <form (ngSubmit)="onSubmit()" class="contact">
+            <div class="inputContainer">
+                <label>Email</label>
+                <input type="text" id="email" name="email" [(ngModel)]="email" >
+            </div>
+            <div class="inputContainer">
+                <label>Password</label>
+                <input type="password" id="password" name="password" [(ngModel)]="password">
+            </div>
+            <div *ngIf="error" class="error-message">{{ error }}</div>
+            <button type="submit" class="registerButton">Login</button>
+        </form>
+        <div class="alreadyContainer">
+            <h2>Register</h2>
+            <h5 class="noAccount">Don't have account?</h5>
+            <a class="loginButton" routerLink="/register">Register me</a>
+        </div>
+    </div>
+
+</div>
