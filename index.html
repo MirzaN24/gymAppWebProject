@@ -41,6 +41,12 @@
 <body>
   <main>
     <div class="container marketing" style="margin-top: 100px;">
+      <div class="row">
+        <div>
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addUserModal">ADD
+            USER</button>
+        </div>
+      </div>
       <div id="user-cards" class="row">
         <div class="text-center">
           <div class="spinner-border" role="status">
@@ -48,32 +54,157 @@
           </div>
         </div>
       </div><!-- /.row -->
+
   </main>
 </body>
 
-  <script>
-    $.get( "rest/user", function( data ) {
+<script>
 
-    $("#user-cards").html("");
+  getUser();
 
-    var html = "";
-    for(let i=0; i<data.length; i++){
-      html += `
-      <div class="col-lg-4">
-        <!--I CAN ADD IMAGES OF USERS HERE-->
-          <h2 class="fw-normal">`+ data[i].id +`</h2>
-          <p>`+ data[i].first_name +`</p>
-          <p>`+ data[i].last_name +`</p>
-          <p>`+ data[i].email +`</p>
-          <p>`+ data[i].pass +`</p>
-          <p><a class="btn btn-secondary" href="#">View details</a></p>
-        </div> `;
-    }
+  //Read method / GET 
 
-    $("#user-cards").html(html);
-    console.log(data);
-    //alert( "Load was performed." );
-});
-  </script>
+  function getUser() {
+    $.get("rest/user", function (data) {
+
+      $("#user-cards").html("");
+
+      var html = "";
+      for (let i = 0; i < data.length; i++) { //only id and name, pw and email are not displayed
+        html += `
+  <div class="col-lg-4">
+    <!--I CAN ADD IMAGES OF USERS HERE-->
+      <h2 class="fw-normal">`+ data[i].id + `</h2>
+      <p>`+ data[i].first_name + `</p>
+      <p>`+ data[i].last_name + `</p>
+      <p><button type="button" class="btn btn-primary see-user" onclick="showModal(`+ data[i].id + `)">
+    USER INFO
+  </button></p>
+    </div> `;
+      }
+
+      $("#user-cards").html(html);
+      console.log(data);
+    });
+
+  }
+
+
+  function showModal(id) {
+    $('.see-user').attr('disabled', true);
+    $.get('rest/user/' + id, function (data) {
+      console.log(data);
+      $("#id").val(data.id);
+      $("#first_name").val(data.first_name);
+      $("#last_name").val(data.last_name);
+      $("#email").val(data.email);
+      $("#pass").val(data.pass);
+      $('#exampleModal').modal("show");
+      $('.see-user').attr('disabled', false);
+    })
+
+  }
+
+  //Update method / PUT
+
+  function saveUser() {
+    $('.save-user').attr('disabled', true);
+
+    var user = {};
+
+    user.id = $('#id').val();
+    user.first_name = $('#first_name').val();
+    user.last_name = $('#last_name').val();
+    user.email = $('#email').val();
+    user.pass = $('#pass').val();
+
+    $.ajax({
+      url: 'rest/user/' + $('#id').val(),
+      type: 'PUT',
+      data: JSON.stringify(user),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (result) {
+        $('#exampleModal').modal("hide");
+        $('.see-user').attr('disabled', false);
+        $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>>');
+
+        getUser(); //include performance optimization where only one user card refreshes instead of whole page
+      }
+    });
+    console.log(user)
+  }
+
+  function addUser() {
+    console.log("Save user")
+
+    var user = {};
+
+    user.id = $('#add_id').val();
+    user.first_name = $('#add_first_name').val();
+    user.last_name = $('#add_last_name').val();
+    user.email = $('#add_email').val();
+    user.pass = $('#add_pass').val();
+
+    $.ajax({
+      url: 'rest/user',
+      type: 'POST',
+      data: JSON.stringify(user),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (result) {
+        $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>>');
+        $('#addUserModal').modal("hide");
+        getUser(); //include performance optimization where only one user card refreshes instead of whole page
+      }
+    });
+  }
+</script>
+
+<!-- Update Uer Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input id="id" type="hidden">
+        <input id="first_name" type="text">
+        <input id="last_name" type="text">
+        <input id="email" type="text">
+        <input id="pass" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-user" onclick="saveUser()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input id="add_id" type="text">
+        <input id="add_first_name" type="text">
+        <input id="add_last_name" type="text">
+        <input id="add_email" type="text">
+        <input id="add_pass" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-user" onclick="addUser()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </html>
