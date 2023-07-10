@@ -12,12 +12,12 @@ class UserMembershipDao extends BaseDao{
 
 #update
 
-public function get_users_membreship_by_user_id($id){
+public function get_users_membership_by_user_id($id){
   $query="SELECT user_membership.`id`, user.`first_name`, user.`last_name`, membership.`type`, user_membership.`start_date`,user_membership.`end_date`
           FROM user_membership JOIN user ON user.`id` = user_membership.`user_id`
           JOIN membership ON membership.`id`= user_membership.`membership_id`
           WHERE user_membership.`id`= :user_id";
-  return $this->query($query, ['user_id' => $user_id]);
+  return $this->query($query, ['user_id' => $id]);
 }
 
 public function get_user_membership(){
