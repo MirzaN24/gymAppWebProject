@@ -29,8 +29,26 @@ Flight::route('PUT /user_membership/@id', function($id){
                   'data' => Flight::user_membership_service()->update($request, $id)]);
 });
 
-#update
 #delete and put request do not work because there are restrictions, if you want to fix them, edit it inside workbench
 #(Missing ON UPDATE/ON DELETE actions)
+
+#route below does not work
+
+Flight::route('GET /usermembership/@id', function($id){
+    Flight::json(Flight::user_membership_service()->get_users_membership_by_user_id($id));
+  });
+
+
+  Flight::route('GET /usermembership', function(){
+    Flight::json(Flight::user_membership_service()->get_user_membership()); #works fine
+  });
+
+  Flight::route('GET /activeusers', function(){
+    Flight::json(Flight::user_membership_service()->get_active_users()); #works fine
+  });
+
+  Flight::route('GET /earned', function(){
+    Flight::json(Flight::user_membership_service()->get_earned()); #works fine
+  });
 
 ?>
