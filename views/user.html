@@ -1,39 +1,27 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plans</title>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/jQuerySPApp.css" rel="stylesheet">
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-    <script src="assets/js/jquery-3.7.0.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/jquery.validate.min.js"></script>
-    <script src="assets/js/jQuerySPApp.js"></script>
-    <script src="assets/js/plans-service.js"></script>
-
-    <style>
-      .error {
-        color: red
-      }
-    </style>
-</head>
-<body>
+<section id="user">
+    <main id="spapp" role="main">
+  
+      <section id="dashboard"></section>
+      <section id="users"></section>
+      <section id="memberships"></section>
+      <section id="employees"></section>
+      <section id="plans"></section>
+  
       <div class="container marketing" style="margin-top: 100px;">
         <div class="row" style="text-align: center;">
           <div>
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addPlanModal">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addUserModal">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add"
                 viewBox="0 0 16 16">
                 <path
                   d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
                 <path
                   d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
-              </svg> ADD NEW MEMBERSHIP PLAN
+              </svg> ADD USER
             </button>
           </div>
         </div>
-        <div id="plan-cards" class="row">
+        <div id="user-cards" class="row">
           <div class="text-center">
             <div class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -41,9 +29,9 @@
           </div>
         </div><!-- /.row -->
     </main>
-  </body>
+  </section>
 
-  <!-- Update Plan Modal -->
+  <!-- Update User Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -53,40 +41,51 @@
         </div>
         <div class="modal-body">
           <input id="id" type="hidden">
-          <input id="type" type="text">
-          <input id="price" type="text">
+          <input id="first_name" type="text">
+          <input id="last_name" type="text">
+          <input id="email" type="text">
+          <input id="pass" type="text">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary save-plan" onclick="PlansService.update()">Save changes</button>
+          <button type="button" class="btn btn-primary save-user" onclick="UserService.update()">Save changes</button>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Add Plan Modal -->
-  <div class="modal fade" id="addPlanModal" tabindex="-1" aria-hidden="true">
+  <!-- Add User Modal -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form id="addPlansForm">
+        <form id="addUserForm">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">ADD NEW PLAN</h5>
+            <h5 class="modal-title" id="exampleModalLabel">ADD NEW USER</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
   
             <div class="mb-3">
-              <label>Plan ID</label>
-              <input name="id" type="text" class="form-control required" placeholder="XX">
+              <label>User ID</label>
+              <input name="id" type="text" class="form-control required" placeholder="XXXX">
             </div>
             <div class="mb-3">
-              <label>Type</label>
-              <input name="type" type="text" class="form-control required" placeholder="Gold">
+              <label>First Name</label>
+              <input name="first_name" type="text" class="form-control required" placeholder="John">
             </div>
             <div class="mb-3">
-              <label>Price</label>
-              <input name="price" type="text" class="form-control required" placeholder="$100">
+              <label>Last Name</label>
+              <input name="last_name" type="text" class="form-control required" placeholder="Johnny">
             </div>
+            <div class="mb-3">
+              <label>Email</label>
+              <input name="email" type="email" class="form-control required" placeholder="example@gmail.com">
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input name="pass" type="text" class="form-control required" placeholder="xxxxxxxx">
+            </div>
+  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -99,8 +98,6 @@
   
   <script>
   
-    PlansService.init();
+    UserService.init();
   
   </script>
-  
-</html>

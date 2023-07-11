@@ -2,10 +2,7 @@ var DashboardService = {
 
     init: function () {
         DashboardService.count();
-        //DashboardService.active();
         DashboardService.earned();
-        //DashboardService.employes_active();
-        //DashboardService.list();
     },
 
     count: function () {
