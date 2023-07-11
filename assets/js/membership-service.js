@@ -7,8 +7,6 @@ MembershipService = {
 
                 MembershipService.add(entity);
             }
-
-
         });
 
         $('#updateMembershipForm').validate({
@@ -43,6 +41,7 @@ MembershipService = {
               <th class="bg-dark text-light">Membership ID</th>
               <th class="bg-dark text-light">Start Date</th>
               <th class="bg-dark text-light">End Date</th>
+              <th class="bg-dark text-light">Action</th>
             </tr>
           <tr>
                         <th>`+ data[i].id + ` </th>
@@ -50,10 +49,10 @@ MembershipService = {
                         <th>`+ data[i].membership_id + ` </th>
                         <th>`+ data[i].start_date + `</th>
                         <th>`+ data[i].end_date + `</th>
-                        <td>
+                        <td style="text-align: center;">
                             <button type="button" class="btn btn-success membership-button" onclick="MembershipService.get(`+ data[i].id + `) "><i class="fa fa-edit"></i></button>
                               <button type="button" class="btn btn-danger membership-button" onclick="MembershipService.delete(`+ data[i].id + `)"><i class="fa fa-trash"></i></button>
-                          </td>
+                        </td>
             </tr>`;
 
                 }
@@ -151,5 +150,5 @@ MembershipService = {
         });
       },
 
-      
+
 }
