@@ -37,16 +37,18 @@ MembershipService = {
                 for (let i = 0; i < data.length; i++) {
                     html += `<tr>
               <th class="bg-dark text-light">ID</th>
-              <th class="bg-dark text-light">User ID</th>
-              <th class="bg-dark text-light">Membership ID</th>
+              <th class="bg-dark text-light">First Name</th>
+              <th class="bg-dark text-light">Last Name</th>
+              <th class="bg-dark text-light">Type</th>
               <th class="bg-dark text-light">Start Date</th>
               <th class="bg-dark text-light">End Date</th>
               <th class="bg-dark text-light">Action</th>
             </tr>
           <tr>
                         <th>`+ data[i].id + ` </th>
-                        <th>`+ data[i].user_id + ` </th>
-                        <th>`+ data[i].membership_id + ` </th>
+                        <th>`+ data[i].first_name + ` </th>
+                        <th>`+ data[i].last_name + ` </th>
+                        <th>`+ data[i].type + ` </th>
                         <th>`+ data[i].start_date + `</th>
                         <th>`+ data[i].end_date + `</th>
                         <td style="text-align: center;">

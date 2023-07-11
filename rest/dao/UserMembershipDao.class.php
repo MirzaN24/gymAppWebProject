@@ -37,8 +37,7 @@ public function get_active_users(){
 public function get_earned(){
   $query="SELECT SUM(membership.`price`) AS earned
           FROM membership
-          JOIN user_membership ON user_membership.`membership_id`= membership.`id`
-          WHERE user_membership.start_date >= NOW() - INTERVAL 30 DAY";
+          JOIN user_membership ON user_membership.`membership_id`= membership.`id`";
   return $this->query_single($query);
 }
 
