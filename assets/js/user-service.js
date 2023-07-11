@@ -76,6 +76,7 @@ var UserService = {
         });
     },
 
+
     update: function () {
         $('.save-user').attr('disabled', true);
 
