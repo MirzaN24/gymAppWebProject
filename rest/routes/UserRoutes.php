@@ -29,4 +29,8 @@ Flight::route('PUT /user/@id', function($id){
                   'data' => Flight::user_service()->update($request, $id)]);
 });
 
+Flight::route('GET /usercount', function(){
+    Flight::json(Flight::user_service()->get_user_count());
+  });
+
 ?>

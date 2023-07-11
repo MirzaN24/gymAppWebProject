@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/jQuerySPApp.css" rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <script src="assets/js/jquery-3.7.0.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/jQuerySPApp.js"></script>
+    <script src="assets/js/dashboard-service.js"></script>
+
+    <style>
+      .error {
+        color: red
+      }
+    </style>
+</head>
+<body>
+    <div class="container marketing" style="margin-top:10px;">
+        <div class="row">
+          <div>
+          </div>
+        </div>
+        <div class="row"> 
+            <div class="jumbotron" style="display: flex; justify-content: center;">
+                <div class="row w-100" style="display: flex; justify-content: center;">
+                    <div class="col-md-4">
+                        <div class="card border-info mx-sm-1 p-3">
+                            <div class="card border-info shadow text-info text-center p-3 my-card" ><span class="fa fa-users"</span></div>
+                            <div class="text-info text-center mt-3"><h4>Total Users</h4></div>
+                            <div class="text-info text-center mt-2" id="count"><h1></h1></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-dark mx-sm-1 p-3">
+                            <div class="card border-dark shadow text-dark text-center p-3 my-card" ><span class="fa fa-money" aria-hidden="true"></span></div>
+                            <div class="text-dark text-center mt-3"><h4>Earned</h4></div>
+                            <div class="text-dark text-center mt-2" id="earned"><h1></h1></div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+        <div style="display: flex; justify-content: center; margin-top: 50px;">
+            <img src="https://uploads-ssl.webflow.com/5bd5e48e5c85ce432788df78/5dc3196c2bf7686ae82ff813_class%20calendar.png" alt="">
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 50px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <p>
+                Address: Francuske Revolucije bb <br>
+                Contact info: 033/123/456 <br>
+            </p>
+        </div>
+
+</body>
+
+<script>
+    DashboardService.init();
+</script>
+
+</html>

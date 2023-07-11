@@ -1,0 +1,127 @@
+<head>
+  <title>Memberships</title>
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/jQuerySPApp.css" rel="stylesheet">
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <script src="assets/js/jquery-3.7.0.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.validate.min.js"></script>
+  <script src="assets/js/jQuerySPApp.js"></script>
+  <script src="assets/js/membership-service.js"></script>
+  <style>
+    .error {
+      color: red
+    }
+  </style>
+
+</head>
+
+
+<div class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addMembershipModal">ADD NEW MEMBERSHIP</button>
+
+<div class="modal fade" id="addMembershipModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="addMembershipForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Add New Membership</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label>ID</label>
+              <input name="user_id" type="number" class="form-control required" placeholder="XX">
+            </div>
+            <div class="form-group">
+              <label>User ID</label>
+              <input name="user_id" type="number" class="form-control required" placeholder="XXXX">
+            </div>
+            <div class="form-group">
+              <label>Membership ID</label>
+              <input name="membership_id" type="number" class="form-control required" placeholder="XX">
+            </div>
+            <div class="form-group">
+              <label>Start Date</label>
+              <input name="start_date" type="date" class="form-control required" placeholder="Start Date">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input name="end_date" type="date" class="form-control required" placeholder="Start Date">
+            </div>
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateMembershipModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="updateMembershipForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Update Membership</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label>ID</label>
+              <input name="id" type="number" class="form-control required" placeholder="XX">
+            </div>
+            <div class="form-group">
+              <label>User ID</label>
+              <input name="user_id" type="number" class="form-control required" placeholder="XXXX">
+            </div>
+            <div class="form-group">
+              <label>Membership ID</label>
+              <input name="membership_id" type="number" class="form-control required" placeholder="XX">
+            </div>
+            <div class="form-group">
+              <label>Start Date</label>
+              <input name="start_date" type="date" class="form-control required" placeholder="Start Date">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input name="end_date" type="date" class="form-control required" placeholder="Start Date">
+            </div>
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="container marketing" style="margin-top:15px;">
+  <div class="row">
+  </div>
+    <table class="table table-bordered" id="membership-table-full">
+      <thead id="membership-table-full-list">
+          <tr>
+            <th class="bg-dark text-light">ID</th>
+            <th class="bg-dark text-light">User ID</th>
+            <th class="bg-dark text-light">Membership ID</th>
+            <th class="bg-dark text-light">Start Date</th>
+            <th class="bg-dark text-light">End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+
+<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+
+<script>
+  MembershipService.init();
+</script>
+
