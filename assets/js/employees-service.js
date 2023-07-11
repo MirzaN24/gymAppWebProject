@@ -19,7 +19,9 @@ var EmployeesService = {
             for (let i = 0; i < data.length; i++) { //only id and name, pw and email are not displayed
                 html += `
             <div class="col-lg-3" style="margin-bottom: 20px; margin-top: 20px;">     
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem; transition: transform .2s;" 
+                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 0px 10px 0px rgba(0,0,0,0.75)';" 
+                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 0px 0px 0px rgba(0,0,0,0.75)';">
                     <img src="https://icons.veryicon.com/png/o/miscellaneous/core-music/staff-8.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title" style="text-align: center;">`+ data[i].id + `</h5>
