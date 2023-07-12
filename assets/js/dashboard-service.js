@@ -20,10 +20,10 @@ var DashboardService = {
                 let oldHtml = $("#count").html();
                 $("#count").html(oldHtml + html);
             },
-            //error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //toastr.error(XMLHttpRequest.responseJSON.message);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            toastr.error(XMLHttpRequest.responseJSON.message);
 
-            //}
+            }
         });
     },
 
@@ -37,15 +37,15 @@ var DashboardService = {
             success: function (data) {
                 var html = "";
                 for (let i = 0; i < data.length; i++) {
-                    html += `<div class="text-dark text-center mt-2" id="earned"> <h1>` + data[i].earned + ` KM</h1></div>`;
+                    html += `<div class="text-dark text-center mt-2" id="earned"> <h1>$` + data[i].earned + ` </h1></div>`;
                 }
                 let oldHtml = $("#earned").html();
                 $("#earned").html(oldHtml + html);
             },
-            //error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //    toastr.error(XMLHttpRequest.responseJSON.message);
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
 
-            //}
+            }
         });
     },
 
