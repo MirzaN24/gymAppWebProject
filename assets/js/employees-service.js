@@ -11,13 +11,17 @@ var EmployeesService = {
     },
 
     list: function () {
-        $.get("rest/employees", function (data) {
-
-            $("#employee-cards").html("");
-
-            var html = "";
-            for (let i = 0; i < data.length; i++) { //only id and name, pw and email are not displayed
-                html += `
+        $.ajax({
+            url: "rest/employees",
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function (data) {
+                $("#employee-cards").html("");
+                var html = "";
+                for (let i = 0; i < data.length; i++) { //only id and name, pw and email are not displayed
+                    html += `
             <div class="col-lg-3" style="margin-bottom: 20px; margin-top: 20px;">     
                 <div class="card" style="width: 18rem; transition: transform .2s;" 
                 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 0px 10px 0px rgba(0,0,0,0.75)';" 
@@ -43,23 +47,41 @@ var EmployeesService = {
                     </div>
                 </div>
             </div>`;
+                }
+                $("#employee-cards").html(html);
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
+
             }
-            $("#employee-cards").html(html);
         });
     },
 
     get: function (id) {
         $('.see-employee').attr('disabled', true);
-        $.get('rest/employees/' + id, function (data) {
-            console.log(data);
-            $("#id").val(data.id);
-            $("#full_name").val(data.full_name);
-            $("#phone_number").val(data.phone_number);
-            $("#email").val(data.email);
-            $("#position").val(data.position);
+        $.ajax({
+            url: 'rest/employees/' + id,
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function (data) {
+                console.log(data);
+                $("#id").val(data.id);
+                $("#full_name").val(data.full_name);
+                $("#phone_number").val(data.phone_number);
+                $("#email").val(data.email);
+                $("#position").val(data.position);
 
-            $('#exampleModal').modal("show");
-            $('.see-employee').attr('disabled', false);
+                $('#exampleModal').modal("show");
+                $('.see-employee').attr('disabled', false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
+                $('.see-plan').attr('disabled', false);
+            }
+
         })
     },
 
@@ -70,13 +92,16 @@ var EmployeesService = {
             data: JSON.stringify(employee),
             contentType: "application/json",
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#employee-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 $('#addEmployeeModal').modal("hide");
                 toastr.success("Added!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
@@ -99,6 +124,9 @@ var EmployeesService = {
             data: JSON.stringify(employee),
             contentType: "application/json",
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#exampleModal').modal("hide");
                 $('.see-employee').attr('disabled', false);
@@ -106,7 +134,7 @@ var EmployeesService = {
                 toastr.success("Updated!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
@@ -117,12 +145,15 @@ var EmployeesService = {
         $.ajax({
             url: 'rest/employees/' + id,
             type: 'DELETE',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#employees-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Deleted!");
                 EmployeesService.list();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });

@@ -11,10 +11,14 @@ var UserService = {
     },
 
     list: function () {
-        $.get("rest/user", function (data) {
-
-            $("#user-cards").html("");
-
+        $.ajax({
+            url: "rest/user",
+            type: "GET",
+            beforeSend: function (xhr) { 
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token')); 
+            },
+            success: function (data) {$("#user-cards").html("");
+    
             var html = "";
             for (let i = 0; i < data.length; i++) { //only id and name, pw and email are not displayed
                 html += `
@@ -33,7 +37,7 @@ var UserService = {
                                     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                 </svg>
                             </button>
-
+    
                             <button type="button" class="btn btn-danger see-user" onclick="UserService.delete(`+ data[i].id + `)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
@@ -46,21 +50,33 @@ var UserService = {
             </div>`;
             }
             $("#user-cards").html(html);
+            },
         });
+
     },
 
     get: function (id) {
         $('.see-user').attr('disabled', true);
-        $.get('rest/user/' + id, function (data) {
-            console.log(data);
-            $("#id").val(data.id);
-            $("#first_name").val(data.first_name);
-            $("#last_name").val(data.last_name);
-            $("#email").val(data.email);
-            $("#pass").val(data.pass);
-            
-            $('#exampleModal').modal("show");
-            $('.see-user').attr('disabled', false);
+        $.ajax({
+            url: 'rest/user/' + id,
+            type: "GET",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function (data) {
+                console.log(data);
+                $("#id").val(data.id);
+                $("#first_name").val(data.first_name);
+                $("#last_name").val(data.last_name);
+                $("#email").val(data.email);
+                $("#pass").val(data.pass);
+
+                $('#exampleModal').modal("show");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
+                $('.see-user').attr('disabled', false);
+            }
         })
     },
 
@@ -71,13 +87,16 @@ var UserService = {
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 $('#addUserModal').modal("hide");
                 toastr.success("Added!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
@@ -100,6 +119,9 @@ var UserService = {
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#exampleModal').modal("hide");
                 $('.see-user').attr('disabled', false);
@@ -107,7 +129,7 @@ var UserService = {
                 toastr.success("Updated!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
                 $('.user-button').attr('disabled', false);
             }
@@ -119,12 +141,15 @@ var UserService = {
         $.ajax({
             url: 'rest/user/' + id,
             type: 'DELETE',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Deleted!");
                 UserService.list();
             },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });

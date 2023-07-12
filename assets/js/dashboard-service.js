@@ -9,9 +9,9 @@ var DashboardService = {
         $.ajax({
             url: "rest/usercount",
             type: "GET",
-            //beforeSend: function(xhr){
-            //  xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (data) {
                 var html = "";
                 for (let i = 0; i < data.length; i++) {
@@ -22,7 +22,7 @@ var DashboardService = {
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
             toastr.error(XMLHttpRequest.responseJSON.message);
-
+            LoginService.logout();
             }
         });
     },
@@ -31,9 +31,9 @@ var DashboardService = {
         $.ajax({
             url: "rest/earned",
             type: "GET",
-            //beforeSend: function (xhr) {
-              //  xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (data) {
                 var html = "";
                 for (let i = 0; i < data.length; i++) {
@@ -44,7 +44,7 @@ var DashboardService = {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
-
+                LoginService.logout();
             }
         });
     },

@@ -28,9 +28,9 @@ MembershipService = {
         $.ajax({
             url: "rest/usermembership",
             type: "GET",
-            //beforeSend: function(xhr){
-            //  xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (data) {
                 $("#membership-table-full-list").html("");
                 var html = "";
@@ -62,7 +62,31 @@ MembershipService = {
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
+            }
+        });
+    },
 
+    get: function (id) {
+        $('.employe-button').attr('disabled', true);
+        $.ajax({
+            url: 'rest/user_membership/' + id,
+            type: "GET",
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function (data) {
+                $('#updateMembershipForm input[name="id"]').val(id);
+                $('#updateMembershipForm input[name="user_id"]').val(data.user_id);
+                $('#updateMembershipForm input[name="membership_id"]').val(data.membership_id);
+                $('#updateMembershipForm input[name="start_date"]').val(data.start_date);
+                $('#updateMembershipForm input[name="end_date"]').val(data.end_date);
+
+                $('.membership-button').attr('disabled', false);
+                $('#updateMembershipModal').modal("show");
+                $('.employe-button').attr('disabled', false);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -74,9 +98,9 @@ MembershipService = {
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
-            //beforeSend: function(xhr){
-            //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
+            beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             success: function (result) {
                 $("#membership-table-full-list").html('<div class="spinner-border" role="status"> <span class="sr-only"></span></div>');
                 MembershipService.list(); // perf optimization
@@ -90,50 +114,13 @@ MembershipService = {
         });
     },
 
-    delete: function (id) {
-        $.ajax({
-            url: 'rest/user_membership/' + id,
-            type: 'DELETE',
-            //beforeSend: function(xhr){
-            //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
-            success: function (result) {
-                $("#membership-table-full-list").html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
-                MembershipService.list();
-                toastr.success("Deleted!");
-            }
-        });
-    },
-
-    get: function (id) {
-        $('.employe-button').attr('disabled', true);
-        $.ajax({
-            url: 'rest/user_membership/' + id,
-            type: "GET",
-            //beforeSend: function (xhr) {
-            //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
-            success: function (data) {
-                $('#updateMembershipForm input[name="id"]').val(id);
-                $('#updateMembershipForm input[name="user_id"]').val(data.user_id);
-                $('#updateMembershipForm input[name="membership_id"]').val(data.membership_id);
-                $('#updateMembershipForm input[name="start_date"]').val(data.start_date);
-                $('#updateMembershipForm input[name="end_date"]').val(data.end_date);
-
-                $('.membership-button').attr('disabled', false);
-                $('#updateMembershipModal').modal("show");
-                $('.employe-button').attr('disabled', false);
-            }
-        });
-    },
-
     update: function (id, entity) {
         $.ajax({
             url: 'rest/user_membership/' + id,
             type: 'PUT',
-            //beforeSend: function(xhr){
-            //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-            //},
+            beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
             data: JSON.stringify(entity),
             contentType: "application/json",
             dataType: "json",
@@ -142,9 +129,30 @@ MembershipService = {
                 MembershipService.list(); // perf optimization
                 $("#updateMembershipModal").modal("hide");
                 toastr.success("Updated!");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
+
+    delete: function (id) {
+        $.ajax({
+            url: 'rest/user_membership/' + id,
+            type: 'DELETE',
+            beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function (result) {
+                $("#membership-table-full-list").html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
+                MembershipService.list();
+                toastr.success("Deleted!");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
+            }
+        });
+    }
 
 
 }
