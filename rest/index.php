@@ -27,7 +27,7 @@ Flight::map('error', function(Exception $ex){
 
 Flight::route('/*', function(){
     $path = Flight::request()->url;
-    if($path == '/login') return TRUE; //exclude /login
+    if($path == '/login' || $path == '/docs.json') return TRUE; //exclude /login and /docs.json
     $headers = getallheaders();
     if(@!$headers['Authorization']){
         Flight::json(["message" => "Authorization is missing!"], 403);
@@ -43,6 +43,13 @@ Flight::route('/*', function(){
         }
     }
 });
+
+/* REST API documentation endpoint */
+Flight::route('GET /docs.json', function(){
+    $openapi = \OpenApi\scan('routes');
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+  });
 
 require_once "routes/UserRoutes.php";
 require_once "routes/EmployeesRoutes.php";
