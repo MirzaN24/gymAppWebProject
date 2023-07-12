@@ -76,6 +76,9 @@ var UserService = {
                 $('#addUserModal').modal("hide");
                 toastr.success("Added!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -103,6 +106,10 @@ var UserService = {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Updated!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
+                $('.user-button').attr('disabled', false);
             }
         });
     },
@@ -116,6 +123,9 @@ var UserService = {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Deleted!");
                 UserService.list();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },

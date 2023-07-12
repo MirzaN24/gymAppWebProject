@@ -58,12 +58,10 @@ MembershipService = {
             </tr>`;
 
                 }
-                //  let oldHtml = $("#membership-table-full-list").html();
-                //  $("#membership-table-full-list").html(oldHtml+html);
                 $("#membership-table-full-list").html(html);
-                //},
-                //error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //    toastr.error(XMLHttpRequest.responseJSON.message);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
 
             }
         });
@@ -84,11 +82,10 @@ MembershipService = {
                 MembershipService.list(); // perf optimization
                 $("#addMembershipModal").modal("hide");
                 $('.modal-backdrop').remove();
-                //toastr.success("Membership added!");
-                //},
-                //error: function(XMLHttpRequest, textStatus, errorThrown) {
-                //toastr.error(XMLHttpRequest.responseJSON.message);
-
+                toastr.success("Added!");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -103,7 +100,7 @@ MembershipService = {
             success: function (result) {
                 $("#membership-table-full-list").html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
                 MembershipService.list();
-                //toastr.success("Membership deleted!");
+                toastr.success("Deleted!");
             }
         });
     },
@@ -114,7 +111,7 @@ MembershipService = {
             url: 'rest/user_membership/' + id,
             type: "GET",
             //beforeSend: function (xhr) {
-                //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
             //},
             success: function (data) {
                 $('#updateMembershipForm input[name="id"]').val(id);
@@ -125,32 +122,29 @@ MembershipService = {
 
                 $('.membership-button').attr('disabled', false);
                 $('#updateMembershipModal').modal("show");
-            //},
-            //error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //toastr.error(XMLHttpRequest.responseJSON.message);
                 $('.employe-button').attr('disabled', false);
             }
         });
     },
 
-    update: function(id, entity){
+    update: function (id, entity) {
         $.ajax({
-          url: 'rest/user_membership/' + id,
-          type: 'PUT',
-          //beforeSend: function(xhr){
+            url: 'rest/user_membership/' + id,
+            type: 'PUT',
+            //beforeSend: function(xhr){
             //xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-          //},
-          data: JSON.stringify(entity),
-          contentType: "application/json",
-          dataType: "json",
-          success: function(result) {
-              $("#membership-table-full-list").html('<div class="spinner-border" role="status"> <span class="sr-only"></span></div>');
-              MembershipService.list(); // perf optimization
-              $("#updateMembershipModal").modal("hide");
-              //toastr.success("Membership updated!");
-          }
+            //},
+            data: JSON.stringify(entity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                $("#membership-table-full-list").html('<div class="spinner-border" role="status"> <span class="sr-only"></span></div>');
+                MembershipService.list(); // perf optimization
+                $("#updateMembershipModal").modal("hide");
+                toastr.success("Updated!");
+            }
         });
-      },
+    },
 
 
 }

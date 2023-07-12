@@ -74,6 +74,9 @@ var PlansService = {
                 $('#addPlanModal').modal("hide");
                 toastr.success("Added!");
                 PlansService.list(); //include performance optimization where only one emp card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -99,6 +102,9 @@ var PlansService = {
                 $('#plan-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Updated!");
                 PlansService.list(); //include performance optimization where only one emp card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -112,8 +118,11 @@ var PlansService = {
                 $('#plan-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Deleted!");
                 PlansService.list();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
-    },
+    }
 
 }

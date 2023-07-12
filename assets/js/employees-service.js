@@ -75,6 +75,9 @@ var EmployeesService = {
                 $('#addEmployeeModal').modal("hide");
                 toastr.success("Added!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -102,6 +105,9 @@ var EmployeesService = {
                 $('#employee-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Updated!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },
@@ -115,6 +121,9 @@ var EmployeesService = {
                 $('#employees-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 toastr.success("Deleted!");
                 EmployeesService.list();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest.responseJSON.message);
             }
         });
     },

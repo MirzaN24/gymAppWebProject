@@ -11,6 +11,10 @@ Flight::register('employees_service', "EmployeesService");
 Flight::register('membership_service', "MembershipService");
 Flight::register('user_membership_service', "UserMembershipService");
 
+Flight::map('error', function(Exception $ex){
+    Flight::json(['message' => $ex->getMessage()], 500);
+});
+
 require_once "routes/UserRoutes.php";
 require_once "routes/EmployeesRoutes.php";
 require_once "routes/MembershipRoutes.php";
