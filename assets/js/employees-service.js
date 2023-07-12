@@ -73,6 +73,7 @@ var EmployeesService = {
             success: function (result) {
                 $('#employee-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 $('#addEmployeeModal').modal("hide");
+                toastr.success("Added!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
             }
         });
@@ -99,6 +100,7 @@ var EmployeesService = {
                 $('#exampleModal').modal("hide");
                 $('.see-employee').attr('disabled', false);
                 $('#employee-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
+                toastr.success("Updated!");
                 EmployeesService.list(); //include performance optimization where only one emp card refreshes instead of whole page
             }
         });
@@ -111,6 +113,7 @@ var EmployeesService = {
             type: 'DELETE',
             success: function (result) {
                 $('#employees-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
+                toastr.success("Deleted!");
                 EmployeesService.list();
             }
         });

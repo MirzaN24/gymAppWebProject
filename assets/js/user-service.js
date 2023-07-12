@@ -74,6 +74,7 @@ var UserService = {
             success: function (result) {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
                 $('#addUserModal').modal("hide");
+                toastr.success("Added!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
             }
         });
@@ -100,6 +101,7 @@ var UserService = {
                 $('#exampleModal').modal("hide");
                 $('.see-user').attr('disabled', false);
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
+                toastr.success("Updated!");
                 UserService.list(); //include performance optimization where only one user card refreshes instead of whole page
             }
         });
@@ -112,6 +114,7 @@ var UserService = {
             type: 'DELETE',
             success: function (result) {
                 $('#user-cards').html('<div class="text-center"> <div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span> </div> </div>');
+                toastr.success("Deleted!");
                 UserService.list();
             }
         });
