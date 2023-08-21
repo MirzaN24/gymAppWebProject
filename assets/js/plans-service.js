@@ -111,6 +111,7 @@ var PlansService = {
         plan.id = $('#id').val();
         plan.type = $('#type').val();
         plan.price = $('#price').val();
+        plan.code = $('#code').val();
 
         $.ajax({
             url: 'rest/membership/' + $('#id').val(),
